@@ -1,7 +1,6 @@
 package GoLeetcode
 
 //70 爬楼梯
-
 func climbStairs(n int) int {
 	a := 1
 	b := 1
@@ -31,4 +30,49 @@ func minimumTotal(triangle [][]int) int {
 		}
 	}
 	return triangle[0][0]
+}
+
+//152 乘积最大子序列
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func maxProduct(nums []int) int {
+	maximum, big, small := nums[0], nums[0], nums[0]
+	for i := 1; i < len(nums); i++ {
+		if nums[i] < 0 {
+			big, small = small, big
+		}
+
+		big = max(nums[i], nums[i]*big)
+		small = min(nums[i], nums[i]*small)
+		maximum = max(maximum, big)
+	}
+	return maximum
+}
+
+//300 最长上升子序列
+import "sort"
+
+func lengthOfLIS(nums []int) int {
+	dp := []int{}
+	for _, num := range nums {
+		i := sort.SearchInts(dp, num)
+		if i == len(dp) {
+			dp = append(dp, num)
+		} else {
+			dp[i] = num
+		}
+	}
+	return len(dp)
 }

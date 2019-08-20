@@ -5,10 +5,29 @@
  *     Next *ListNode
  * }
  */
-func reverseList(head *ListNode) *ListNode {
-	var prev *ListNode
-	for head != nil {
-		head.Next, prev, head = prev, head, head.Next
+ func isValid(s string) bool {
+	size := len(s)
+	stack = make([]byte,size)
+	top := 0
+
+	for i:=0;i<size;i++{
+		ch = s[i]
+
+		switch ch {
+		case '(':
+			stack[top]=ch+1
+			top++
+		case '[','{':
+			stack[top]=ch+2
+			top++
+		case ')',']','}':
+			if top >0 && stack[top-1]==ch {
+				top--
+			}
+			else{
+				return false
+			}
+		}
 	}
-	return prev
+	return top==0
 }

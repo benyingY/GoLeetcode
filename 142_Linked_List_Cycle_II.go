@@ -1,37 +1,26 @@
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * }
- */
-func detectCycle(head *ListNode) *ListNode {
-	if head == nil {
-		return nil
-	}
+func isValid(s string) bool {
+	size := len(s)
+	stack = make([]byte,size)
+	top := 0
 
-	isCycle := false
-	slow, fast := head, head.Next
+	for i:=0;i<size;i++{
+		ch = s[i]
 
-	for fast != nil && fast.Next != nil {
-		if slow == fast {
-			isCycle = true
-			break
+		switch ch {
+		case '(':
+			stack[top]=ch+1
+			top++
+		case '[','{':
+			stack[top]=ch+2
+			top++
+		case ')',']','}':
+			if top >0 && stack[top-1]==ch {
+				top--
+			}
+			else{
+				return false
+			}
 		}
-
-		slow = slow.Next
-		fast = fast.Next.Next
 	}
-
-	if !isCycle {
-		return nil
-	}
-
-	slow = head
-	fast = fast.Next
-	for slow != fast {
-		slow = slow.Next
-		fast = fast.Next
-	}
-	return slow
+	return top==0
 }
